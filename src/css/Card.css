@@ -1,0 +1,9 @@
+.card {
+    margin: 5px;
+    background-color: #6589F9;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    height: 128px;
+    width: 128px;
+  }

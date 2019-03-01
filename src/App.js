@@ -1,28 +1,30 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import Card from "./Components/Card.jsx";
+import cardsArray from "./cards.js";
+import "./App.css";
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+	constructor(props) {
+		super(props);
+		this.state = {};
+	}
+
+	render() {
+		// Put each item in the cardsArray array in Card component
+		const cards = cardsArray.map(element => {
+			return <Card key={element.key} name={element.name} img={element.img} />;
+		});
+		// Duplicate array to create a match for each card
+		const gameGrid = cards.concat(cards);
+		// Randomize game grid on each load
+		gameGrid.sort(() => 0.5 - Math.random());
+
+		return (
+			<div id="game">
+				<section className="grid">{gameGrid}</section>
+			</div>
+		);
+	}
 }
 
 export default App;
