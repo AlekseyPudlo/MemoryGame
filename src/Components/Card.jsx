@@ -26,7 +26,10 @@ class Card extends Component {
 				this.updateIsSelectedStatement();
 			}
 		} else {
-
+			if (count > 0) {
+				updateCount(count - 1);
+				this.updateIsSelectedStatement();
+			}
 		}
 	};
 

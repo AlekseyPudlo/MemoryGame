@@ -16,16 +16,13 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-		// Generate banch of random card objects
-		let data = this.getRandomCards();
-		// Create Card component for each card objects
-		let cards = this.setCardComponent(data);
-		// Update state with new set of cards
+		// Generate banch of random card objects ans set it to the state
 		this.setState({
-			cards: cards
+			cards: this.getRandomCards()
 		});
 	}
 
+	// Create Card component for each card objects
 	setCardComponent = array => {
 		return array.map((element, index) => {
 			const id = element.name + index;
@@ -60,7 +57,7 @@ class App extends Component {
 		const state = this.state;
 		return (
 			<div id="game">
-				<section className="grid">{state.cards}</section>
+				<section className="grid">{this.setCardComponent(state.cards)}</section>
 			</div>
 		);
 	}
