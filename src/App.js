@@ -7,12 +7,13 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			count: 0,
-			cards: []
+			cards: [],
+			selectedID: "",
+			firstGuess: "",
+			matches: []
 		};
 		this.setCardComponent = this.setCardComponent.bind(this);
 		this.getRandomCards = this.getRandomCards.bind(this);
-		/* this.updateCount = this.updateCount.bind(this); */
 	}
 
 	componentDidMount() {
@@ -33,8 +34,11 @@ class App extends Component {
 					id={id}
 					name={element.name}
 					img={element.img}
-					count={this.state.count}
-					updateCount={this.updateCount.bind(this)}
+					isSelected={id === this.state.selectedID}
+					isMatched={this.state.matches.some(
+						cardName => cardName === element.name
+					)}
+					updateAppState={this.updateAppState.bind(this)}
 				/>
 			);
 		});
@@ -49,15 +53,22 @@ class App extends Component {
 		return [...slicedArray, ...slicedArray].sort(() => 0.5 - Math.random());
 	};
 
-	updateCount = count => {
-		this.setState({ count: count });
+	updateAppState = (cardID, cardName) => {
+		let { firstGuess, matches } = this.state;
+
+		firstGuess
+			? firstGuess === cardName
+				? this.setState({ selectedID: "", firstGuess: "", matches: [...matches, cardName] })
+				: this.setState({ selectedID: "", firstGuess: "" })
+			: this.setState({ selectedID: cardID, firstGuess: cardName });
 	};
 
 	render() {
-		const state = this.state;
 		return (
 			<div id="game">
-				<section className="grid">{this.setCardComponent(state.cards)}</section>
+				<section className="grid">
+					{this.setCardComponent(this.state.cards)}
+				</section>
 			</div>
 		);
 	}
