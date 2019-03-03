@@ -44,13 +44,17 @@ class App extends Component {
 		});
 	};
 
+	_shuffle = array => {
+		return array.sort(() => 0.5 - Math.random());
+	}
+
 	getRandomCards = () => {
 		// Make a shuffle array of cards
-		let shuffledArray = cardsArray.sort(() => 0.5 - Math.random());
-		// Copy certain amount of cards
+		let shuffledArray = _shuffle(cardsArray);
+		// Copy 18 cards because we want to show grid 6x6 cards = 36 cards
 		let slicedArray = shuffledArray.slice(0, 18);
 		// Duplicate and return again shuffled array to create a match for each card
-		return [...slicedArray, ...slicedArray].sort(() => 0.5 - Math.random());
+		return _shuffle([...slicedArray, ...slicedArray]);
 	};
 
 	updateAppState = (cardID, cardName) => {
