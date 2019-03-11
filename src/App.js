@@ -8,8 +8,7 @@ class App extends Component {
 		super(props);
 		this.state = {
 			cards: [],
-			selectedID: "",
-			firstGuess: "",
+			firstGuess: { name: "", id: "" },
 			matches: []
 		};
 		this.setCardComponent = this.setCardComponent.bind(this);
@@ -17,7 +16,7 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-		// Generate banch of random card objects ans set it to the state
+		// Generate bench of random card objects ans set it to the state
 		this.setState({
 			cards: this.getRandomCards()
 		});
@@ -34,7 +33,7 @@ class App extends Component {
 					id={id}
 					name={element.name}
 					img={element.img}
-					isSelected={id === this.state.selectedID}
+					isSelected={id === this.state.firstGuess.id}
 					isMatched={this.state.matches.some(
 						cardName => cardName === element.name
 					)}
@@ -46,25 +45,38 @@ class App extends Component {
 
 	_shuffle = array => {
 		return array.sort(() => 0.5 - Math.random());
-	}
+	};
 
 	getRandomCards = () => {
 		// Make a shuffle array of cards
-		let shuffledArray = _shuffle(cardsArray);
+		let shuffledArray = this._shuffle(cardsArray);
 		// Copy 18 cards because we want to show grid 6x6 cards = 36 cards
 		let slicedArray = shuffledArray.slice(0, 18);
 		// Duplicate and return again shuffled array to create a match for each card
-		return _shuffle([...slicedArray, ...slicedArray]);
+		return this._shuffle([...slicedArray, ...slicedArray]);
 	};
 
 	updateAppState = (cardID, cardName) => {
 		let { firstGuess, matches } = this.state;
 
-		firstGuess
-			? firstGuess === cardName
-				? this.setState({ selectedID: "", firstGuess: "", matches: [...matches, cardName] })
-				: this.setState({ selectedID: "", firstGuess: "" })
-			: this.setState({ selectedID: cardID, firstGuess: cardName });
+		/* if first guess name value is not empty then the first guess contains id 
+		and name of one selection */
+		firstGuess.name
+			? /* if first guess name equals to second peak's name and 
+			their id are different then card Name will be added to matches array */
+			  firstGuess.name === cardName && firstGuess.id !== cardID
+			  /* set new state with an empty firstGuess value and add card name 
+			  to the matches array */
+				? this.setState({
+						firstGuess: { name: "", id: "" },
+						matches: [...matches, cardName]
+				  })
+				  /* In case when IDs are not matched just set new state with empty firstGuess value */
+				: this.setState({ firstGuess: { name: "", id: "" } })
+			/* if first guess name value is empty then new values will be assigned to its name and card keys */
+			: this.setState({
+					firstGuess: { name: cardName, id: cardID }
+			  });
 	};
 
 	render() {
