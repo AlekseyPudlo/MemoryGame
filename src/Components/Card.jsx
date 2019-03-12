@@ -14,9 +14,9 @@ class Card extends Component {
 	}
 
 	handleClick = () => {
-		const {id, name, updateAppState } = this.props;
+		const {id, name, cardsHandler } = this.props;
 
-		updateAppState(id, name);
+		cardsHandler(id, name);
 	};
 
 	render() {
