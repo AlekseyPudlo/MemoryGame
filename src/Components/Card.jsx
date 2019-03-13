@@ -13,7 +13,7 @@ class Card extends Component {
 	};
 
 	render() {
-		const { id, name, frontImg, backImg, isSelected, isMatched } = this.props;
+		const { frontImg, backImg, isSelected, isMatched } = this.props;
 		const innerCardClassName = isMatched
 			? "flip-card-inner match"
 			: isSelected
