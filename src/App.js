@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Card from "./Components/Card.jsx";
 import cardsArray from "./cards.js";
+import FrontImg from "./question.png";
 import "./App.css";
 
 class App extends Component {
@@ -28,14 +29,15 @@ class App extends Component {
 		return array.map((element, index) => {
 			const id = element.name + index;
 			const name = element.name;
-			const img = element.img;
+			const backImg = element.img;
 			// return newly created Card component
 			return (
 				<Card
 					key={id}
 					id={id}
 					name={name}
-					img={img}
+					backImg={backImg}
+					frontImg={FrontImg}
 					isSelected={this.state.selectedIDs.some(
 						idElement => idElement === id
 					)}
@@ -68,7 +70,7 @@ class App extends Component {
 	cardsHandler = (cardID, cardName) => {
 		const { firstGuess, matches } = this.state;
 		// set delay to 1.2 sec
-		const delay = 1200;
+		const delay = 1600;
 
 		/* if first guess name value is not empty then the first guess contains id 
 		and name of one selection */

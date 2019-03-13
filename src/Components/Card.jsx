@@ -7,31 +7,30 @@ class Card extends Component {
 		this.state = {};
 	}
 
-	switchSelectedStatement = () => {
-		this.setState(prevState => ({
-			isSelected: !prevState.isSelected
-		}));
-	}
-
 	handleClick = () => {
-		const {id, name, cardsHandler } = this.props;
-
+		const { id, name, cardsHandler } = this.props;
 		cardsHandler(id, name);
 	};
 
 	render() {
-		const { id, name, img, isSelected, isMatched } = this.props;
-		const imgClassName = isMatched ? "card match" : isSelected ? "card selected" : "card";
+		const { id, name, frontImg, backImg, isSelected, isMatched } = this.props;
+		const innerCardClassName = isMatched
+			? "flip-card-inner match"
+			: isSelected
+			? "flip-card-inner selected"
+			: "flip-card-inner";
 
 		return (
-			<img
-				alt=""
-				src={img}
-				id={id}
-				className={imgClassName}
-				name={name + "_img"}
-				onClick={this.handleClick.bind(this)}
-			/>
+			<div className="flip-card" onClick={this.handleClick.bind(this)}>
+				<div className={innerCardClassName}>
+					<div className="front">
+						<img className="front-img" src={frontImg} alt="" />
+					</div>
+					<div className="back">
+						<img src={backImg} alt="" />
+					</div>
+				</div>
+			</div>
 		);
 	}
 }
